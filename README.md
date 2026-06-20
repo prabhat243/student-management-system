@@ -135,11 +135,14 @@ Password: admin123
 ## 📸 Screenshots
 
 ### Login Page
+<img width="1919" height="990" alt="image" src="https://github.com/user-attachments/assets/3ff8861a-4d42-4b23-94fe-f50881c86416" />
+
 
 * Modern Glassmorphism UI
 * Responsive Design
 
 ### Dashboard
+
 
 * Admin Dashboard
 * Student Management Panel
