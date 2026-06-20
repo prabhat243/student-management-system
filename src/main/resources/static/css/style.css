@@ -1,0 +1,39 @@
+body{
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+}
+
+.dashboard-card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+    transition:.3s;
+    box-shadow:0 8px 25px rgba(0,0,0,.15);
+}
+
+.dashboard-card:hover{
+    transform:translateY(-8px);
+}
+
+.glass-card{
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(12px);
+    padding:25px;
+    border-radius:20px;
+    color:white;
+}
+
+.table{
+    background:white;
+    border-radius:10px;
+}
+
+.form-control{
+    border-radius:12px;
+}
+
+.btn{
+    border-radius:12px;
+}
