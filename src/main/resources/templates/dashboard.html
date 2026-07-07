@@ -1,129 +1,771 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Student Management Dashboard</title>
+    <title>SMS :: Academix</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-
-        body{
-            background:#f4f7fc;
+        :root {
+            --ink: #171421;
+            --muted: #6b687a;
+            --panel: #ffffff;
+            --line: #eceaf3;
+            --brand: #25105f;
+            --brand-light: #4b3a8f;
+            --blue: #526fc9;
+            --teal: #1599a4;
+            --orange: #fb8424;
+            --page: #f8f7fb;
         }
 
-        .sidebar{
-            position:fixed;
-            width:250px;
-            height:100vh;
-            background:linear-gradient(180deg,#4f46e5,#7c3aed);
-            color:white;
-            padding-top:20px;
+        * {
+            box-sizing: border-box;
         }
 
-        .sidebar a{
-            display:block;
-            color:white;
-            text-decoration:none;
-            padding:15px 25px;
-            transition:.3s;
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: var(--page);
+            color: var(--ink);
+            font-family: "Inter", Arial, sans-serif;
         }
 
-        .sidebar a:hover{
-            background:rgba(255,255,255,.15);
+        .app-shell {
+            display: flex;
+            min-height: 100vh;
         }
 
-        .main{
-            margin-left:250px;
-            padding:30px;
+        .sidebar {
+            position: fixed;
+            inset: 0 auto 0 0;
+            width: 240px;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(180deg, #2b176c 0%, #22115b 55%, #1d0f4f 100%);
+            color: #fff;
+            padding: 24px 14px 18px;
+            box-shadow: 12px 0 28px rgba(35, 19, 82, .18);
+            z-index: 10;
         }
 
-        .card-box{
-            border:none;
-            border-radius:20px;
-            box-shadow:0 8px 20px rgba(0,0,0,.1);
-            transition:.3s;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 8px 28px;
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 0;
         }
 
-        .card-box:hover{
-            transform:translateY(-5px);
+        .brand i,
+        .top-brand i {
+            color: #2a155f;
         }
 
-        .header{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            margin-bottom:30px;
+        .brand i {
+            color: #d8d2ff;
+            font-size: 25px;
         }
 
+        .nav-menu,
+        .nav-footer {
+            display: grid;
+            gap: 8px;
+        }
+
+        .nav-footer {
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, .18);
+            padding-top: 14px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 44px;
+            color: rgba(255, 255, 255, .88);
+            border-radius: 8px;
+            padding: 10px 14px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #fff;
+            background: rgba(255, 255, 255, .13);
+        }
+
+        .nav-link i {
+            width: 18px;
+            color: rgba(255, 255, 255, .82);
+        }
+
+        .main {
+            flex: 1;
+            min-width: 0;
+            margin-left: 240px;
+        }
+
+        .topbar {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            background: #fff;
+            border-bottom: 1px solid var(--line);
+            padding: 0 28px;
+        }
+
+        .top-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .top-brand i {
+            font-size: 28px;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .profile-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            height: 44px;
+            border: 1px solid #d9d6e4;
+            border-radius: 8px;
+            background: #fff;
+            color: var(--ink);
+            padding: 0 12px;
+            font-weight: 600;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 30px;
+            border-radius: 50%;
+            background: #dfe6f7;
+            color: #315189;
+            overflow: hidden;
+        }
+
+        .icon-button {
+            position: relative;
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            background: transparent;
+            color: #272433;
+            border-radius: 8px;
+        }
+
+        .icon-button:hover {
+            background: #f1eff8;
+        }
+
+        .badge-dot {
+            position: absolute;
+            top: 4px;
+            right: 3px;
+            min-width: 16px;
+            height: 16px;
+            display: inline-grid;
+            place-items: center;
+            border-radius: 999px;
+            background: #476bd7;
+            color: #fff;
+            font-size: 10px;
+            line-height: 1;
+        }
+
+        .content {
+            padding: 26px 30px 36px;
+        }
+
+        .welcome {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .welcome h1 {
+            margin: 0;
+            font-size: 25px;
+            font-weight: 500;
+            letter-spacing: 0;
+        }
+
+        .welcome strong {
+            font-weight: 800;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+
+        .metric-card {
+            position: relative;
+            min-height: 132px;
+            overflow: hidden;
+            border-radius: 8px;
+            color: #fff;
+            padding: 22px 18px;
+            box-shadow: 0 11px 26px rgba(44, 35, 79, .18);
+        }
+
+        .metric-card.blue {
+            background: linear-gradient(135deg, #2d328e 0%, #6f90de 100%);
+        }
+
+        .metric-card.teal {
+            background: linear-gradient(135deg, #116f8c 0%, #25bdb4 100%);
+        }
+
+        .metric-card.orange {
+            background: linear-gradient(135deg, #f17322 0%, #ff9f31 100%);
+        }
+
+        .metric-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, .9);
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .metric-icon {
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, .45);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .12);
+        }
+
+        .metric-value {
+            position: relative;
+            z-index: 1;
+            font-size: 38px;
+            line-height: 1;
+            font-weight: 800;
+            letter-spacing: 0;
+        }
+
+        .metric-note {
+            position: relative;
+            z-index: 1;
+            margin-top: 8px;
+            color: rgba(255, 255, 255, .82);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .metric-art {
+            position: absolute;
+            right: 18px;
+            bottom: 22px;
+            color: rgba(255, 255, 255, .72);
+            font-size: 58px;
+        }
+
+        .wave {
+            position: absolute;
+            right: 17px;
+            bottom: 24px;
+            width: 130px;
+            height: 42px;
+        }
+
+        .panel-row {
+            display: grid;
+            grid-template-columns: minmax(320px, 1.35fr) minmax(260px, .95fr);
+            gap: 170px;
+            align-items: start;
+            margin-bottom: 30px;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            box-shadow: 0 7px 21px rgba(43, 38, 63, .13);
+            padding: 18px;
+        }
+
+        .panel h2 {
+            margin: 0 0 12px;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .btn-primary-deep {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 39px;
+            border: 1px solid #12073d;
+            border-radius: 7px;
+            background: var(--brand);
+            color: #fff;
+            padding: 8px 15px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), 0 2px 3px rgba(0, 0, 0, .2);
+        }
+
+        .btn-primary-deep:hover {
+            background: #1c0b50;
+            color: #fff;
+        }
+
+        .btn-outline-soft {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 39px;
+            border: 1px solid #d1cede;
+            border-radius: 7px;
+            background: #fff;
+            color: #292536;
+            padding: 8px 15px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-wrap input {
+            width: 100%;
+            height: 42px;
+            border: 1px solid #d7d4df;
+            border-radius: 8px;
+            padding: 0 44px 0 14px;
+            color: var(--ink);
+            outline: none;
+        }
+
+        .search-wrap input:focus {
+            border-color: #9d91c7;
+            box-shadow: 0 0 0 4px rgba(43, 23, 108, .09);
+        }
+
+        .search-wrap i {
+            position: absolute;
+            top: 50%;
+            right: 14px;
+            transform: translateY(-50%);
+            color: #6f6b7c;
+        }
+
+        .table-panel {
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            box-shadow: 0 7px 24px rgba(43, 38, 63, .08);
+        }
+
+        .student-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .student-table th,
+        .student-table td {
+            padding: 16px 18px;
+            vertical-align: middle;
+            border-bottom: 1px solid var(--line);
+            white-space: nowrap;
+        }
+
+        .student-table th {
+            color: #171421;
+            background: #fff;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .student-table td {
+            color: #24202e;
+            font-size: 15px;
+        }
+
+        .student-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        .student-avatar {
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #dfe4ee;
+            color: #687287;
+            flex: 0 0 36px;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            min-height: 28px;
+            border-radius: 999px;
+            background: #c9f0d2;
+            color: #10672c;
+            padding: 4px 10px;
+            font-weight: 500;
+        }
+
+        .table-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-right: 12px;
+            color: #24669d;
+            border: 0;
+            background: transparent;
+            padding: 0;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .table-action.muted {
+            color: #5f6170;
+        }
+
+        .pagination-strip {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 16px;
+            color: #6b687a;
+            font-size: 14px;
+        }
+
+        .page-control {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #d6d2e2;
+            border-radius: 7px;
+            background: #fff;
+            color: #5d596b;
+        }
+
+        .page-control.active {
+            border-color: #8aa3c8;
+            color: #22517f;
+            font-weight: 700;
+        }
+
+        .empty-row td {
+            color: var(--muted);
+            text-align: center;
+        }
+
+        @media (max-width: 1050px) {
+            .metric-grid,
+            .panel-row {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .table-panel {
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                min-height: auto;
+            }
+
+            .app-shell {
+                display: block;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .topbar {
+                height: auto;
+                flex-wrap: wrap;
+                padding: 16px;
+            }
+
+            .content {
+                padding: 20px 16px 28px;
+            }
+
+            .welcome h1 {
+                font-size: 21px;
+            }
+
+            .quick-actions {
+                gap: 12px;
+            }
+        }
     </style>
-
 </head>
 <body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>SMS :: Academix</span>
+        </div>
 
-<div class="sidebar">
+        <nav class="nav-menu" aria-label="Main navigation">
+            <a href="/dashboard" class="nav-link active"><i class="fa-solid fa-gauge-high"></i>Dashboard</a>
+            <a href="/" class="nav-link"><i class="fa-solid fa-users"></i>Students</a>
+            <a href="/" class="nav-link"><i class="fa-regular fa-bookmark"></i>Courses</a>
+            <a href="/" class="nav-link"><i class="fa-regular fa-file-lines"></i>Grades</a>
+            <a href="#" class="nav-link"><i class="fa-solid fa-chart-line"></i>Reports</a>
+            <a href="#" class="nav-link"><i class="fa-solid fa-gear"></i>Settings</a>
+        </nav>
 
-    <h3 class="text-center mb-4">🎓 SMS</h3>
+        <nav class="nav-footer" aria-label="Account navigation">
+            <a href="#" class="nav-link"><i class="fa-solid fa-gear"></i>Settings</a>
+            <a href="/logout" class="nav-link"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+        </nav>
+    </aside>
 
-    <a href="#"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-    <a href="#"><i class="fa-solid fa-users"></i> Students</a>
-    <a href="#"><i class="fa-solid fa-book"></i> Courses</a>
-    <a href="#"><i class="fa-solid fa-chart-line"></i> Reports</a>
-    <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    <main class="main">
+        <header class="topbar">
+            <div class="top-brand">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>SMS :: Academix</span>
+            </div>
 
+            <div class="top-actions">
+                <button class="profile-btn" type="button">
+                    <span class="avatar"><i class="fa-solid fa-user-tie"></i></span>
+                    <span>A. Gupta</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <button class="icon-button" type="button" aria-label="Notifications">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="badge-dot">1</span>
+                </button>
+                <button class="icon-button" type="button" aria-label="Settings">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+            </div>
+        </header>
+
+        <section class="content">
+            <div class="welcome">
+                <span class="avatar"><i class="fa-solid fa-user-tie"></i></span>
+                <h1><strong>Welcome Admin,</strong> Your Academic Pulse</h1>
+            </div>
+
+            <div class="metric-grid">
+                <article class="metric-card blue">
+                    <div class="metric-title">
+                        <span class="metric-icon"><i class="fa-solid fa-user-graduate"></i></span>
+                        <span>Total Students</span>
+                    </div>
+                    <div class="metric-value" id="studentCount">0</div>
+                    <svg class="wave" viewBox="0 0 130 42" aria-hidden="true">
+                        <path d="M2 30 C18 17 28 33 42 21 C58 8 62 8 76 22 C91 35 100 20 111 17 C120 14 123 8 128 5" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                </article>
+
+                <article class="metric-card teal">
+                    <div class="metric-title">
+                        <span class="metric-icon"><i class="fa-regular fa-square-check"></i></span>
+                        <span>Active Courses</span>
+                    </div>
+                    <div class="metric-value" id="courseCount">0</div>
+                    <i class="fa-solid fa-chart-pie metric-art"></i>
+                </article>
+
+                <article class="metric-card orange">
+                    <div class="metric-title">Average Attendance</div>
+                    <div class="metric-value">92%</div>
+                    <div class="metric-note" id="attendanceTime">Last updated today</div>
+                    <i class="fa-solid fa-gauge-high metric-art"></i>
+                </article>
+            </div>
+
+            <div class="panel-row">
+                <section class="panel">
+                    <h2>Quick Actions</h2>
+                    <div class="quick-actions">
+                        <a class="btn-primary-deep" href="/"><i class="fa-solid fa-plus"></i>Add New Student</a>
+                        <a class="btn-outline-soft" href="/"><i class="fa-regular fa-square"></i>Create Course</a>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h2>Search</h2>
+                    <div class="search-wrap">
+                        <input type="search" id="dashboardSearch" placeholder="Find Students, Courses...">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                </section>
+            </div>
+
+            <section class="table-panel">
+                <table class="student-table">
+                    <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Course</th>
+                        <th>Year</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="dashboardStudentTable">
+                    <tr class="empty-row">
+                        <td colspan="7">Loading students...</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="pagination-strip">
+                    <span>Pagination</span>
+                    <button class="page-control" type="button" aria-label="First page"><i class="fa-solid fa-angles-left"></i></button>
+                    <button class="page-control active" type="button">1</button>
+                    <button class="page-control" type="button" aria-label="Next page"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button class="page-control" type="button" aria-label="Last page"><i class="fa-solid fa-angles-right"></i></button>
+                </div>
+            </section>
+        </section>
+    </main>
 </div>
 
-<div class="main">
+<script>
+    const tableBody = document.getElementById("dashboardStudentTable");
+    const studentCount = document.getElementById("studentCount");
+    const courseCount = document.getElementById("courseCount");
+    const searchInput = document.getElementById("dashboardSearch");
+    const attendanceTime = document.getElementById("attendanceTime");
+    let dashboardStudents = [];
 
-    <div class="header">
-        <h2>Welcome Admin 👋</h2>
-    </div>
+    function deriveYear(age) {
+        if (!age || age < 18) {
+            return "1st";
+        }
 
-    <div class="row">
+        const normalized = ((age - 18) % 4) + 1;
+        return `${normalized}${normalized === 1 ? "st" : normalized === 2 ? "nd" : normalized === 3 ? "rd" : "th"}`;
+    }
 
-        <div class="col-md-4 mb-4">
-            <div class="card card-box p-4">
-                <h5>Total Students</h5>
-                <h2>120</h2>
-            </div>
-        </div>
+    function initials(name) {
+        return (name || "Student")
+            .split(" ")
+            .filter(Boolean)
+            .map(part => part.charAt(0))
+            .join("")
+            .slice(0, 2)
+            .toUpperCase();
+    }
 
-        <div class="col-md-4 mb-4">
-            <div class="card card-box p-4">
-                <h5>Courses</h5>
-                <h2>12</h2>
-            </div>
-        </div>
+    function renderStudents(students) {
+        if (!students.length) {
+            tableBody.innerHTML = `<tr class="empty-row"><td colspan="7">No students found</td></tr>`;
+            return;
+        }
 
-        <div class="col-md-4 mb-4">
-            <div class="card card-box p-4">
-                <h5>Attendance</h5>
-                <h2>92%</h2>
-            </div>
-        </div>
+        tableBody.innerHTML = students.map(student => `
+            <tr>
+                <td>${student.id}</td>
+                <td>
+                    <span class="student-name">
+                        <span class="student-avatar">${initials(student.name)}</span>
+                        ${student.name || "Unnamed Student"}
+                    </span>
+                </td>
+                <td>${student.email || "-"}</td>
+                <td>${student.course || "-"}</td>
+                <td>${deriveYear(student.age)}</td>
+                <td><span class="status-pill">Active</span></td>
+                <td>
+                    <a class="table-action" href="/"><i class="fa-regular fa-pen-to-square"></i>Edit</a>
+                    <a class="table-action muted" href="/"><i class="fa-solid fa-box-archive"></i>Archive</a>
+                </td>
+            </tr>
+        `).join("");
+    }
 
-    </div>
+    async function loadDashboard() {
+        try {
+            const response = await fetch("/students");
+            dashboardStudents = await response.json();
+            const courses = new Set(dashboardStudents.map(student => student.course).filter(Boolean));
 
-    <div class="card p-4">
+            studentCount.innerText = dashboardStudents.length;
+            courseCount.innerText = courses.size || 0;
+            renderStudents(dashboardStudents.slice(0, 5));
+        } catch (error) {
+            tableBody.innerHTML = `<tr class="empty-row"><td colspan="7">Unable to load student data</td></tr>`;
+        }
+    }
 
-        <h4>Student Management</h4>
+    searchInput.addEventListener("input", event => {
+        const value = event.target.value.toLowerCase().trim();
+        const filtered = dashboardStudents.filter(student =>
+            `${student.id} ${student.name} ${student.email} ${student.course}`.toLowerCase().includes(value)
+        );
 
-        <p>
-            Manage students, courses, attendance and reports from here.
-        </p>
+        renderStudents(filtered.slice(0, 5));
+    });
 
-        <a href="/" class="btn btn-primary">
-            Open Student CRUD
-        </a>
-
-    </div>
-
-</div>
-
+    attendanceTime.innerText = `Last updated ${new Date().toLocaleTimeString("en-GB", { timeZoneName: "short" })}`;
+    loadDashboard();
+</script>
 </body>
 </html>
-```
