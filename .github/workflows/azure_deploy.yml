@@ -44,11 +44,8 @@ jobs:
               docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:${{ github.sha }}
               docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:latest
 
-            - name: Azure App Deployment 
+          - name: Azure App Deployment 
             uses: azure/webapps-deploy@v2
             with:
                 app-name: ${{ WEBAPP_NAME }}
                 images: ${{ ACR_NAME }}.azurecr.io/${{ IMAGE_NAME }}:${{ github.sha }}
-
-
-      
