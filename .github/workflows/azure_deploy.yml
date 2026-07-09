@@ -27,7 +27,9 @@ jobs:
               cache: maven
 
           - name: Build Maven Project
-            run: ./mvnw clean package -DskipTests
+            run: |
+              chmod +x mvnw
+              ./mvnw clean package -DskipTests
 
           - name: login to azure 
             uses: azure/Login@v2
